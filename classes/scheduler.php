@@ -8,6 +8,8 @@ class Scheduler {
 
     private $post_has_been_saved;
 
+    private $post;
+
     public function run() {
         add_action( 'save_post', [ $this, 'publish_post' ], 10, 2 );
         add_action( 'kntnt_acf_zapier_scheduled_post', [ $this, 'publish_post' ], 10, 1 );
@@ -99,7 +101,7 @@ class Scheduler {
                 $content = $this->post_meta_description();
             }
 
-            if ( $content = trim( $content ) ) {
+            if ( $content = $this->trim( $content, $target ) ) {
                 $this->send( $content, $webhook );
             }
 
@@ -177,6 +179,20 @@ class Scheduler {
 
     private function post_meta_description() {
         return Plugin::get_field( '_genesis_description', $this->post->ID ) ?: '';
+    }
+
+    private function trim( $content, $target ) {
+        $max_length = Plugin::option( "{$target}_length" );
+        $content = normalizer_normalize( trim( $content ) );
+        $len = strlen( $content );
+        if ( $len > $max_length ) {
+            $content = substr( $content, 0, $max_length );
+            if ( false == ( $pos = strrpos( $content, ' ' ) ) ) {
+                $pos = $max_length - 1;
+            }
+            $content = substr( $content, 0, $pos ) . '…';
+        }
+        return $content;
     }
 
     private function is_due( $date_and_time ) {

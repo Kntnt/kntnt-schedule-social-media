@@ -35,15 +35,45 @@ class Settings extends Abstract_Settings {
         $fields["facebook_{$lang}_webhook"] = [
             'type' => 'url',
             'label' => __( "Facebook webhook", 'kntnt-schedule-sociala-media-zapier' ),
-            'size' => 80,
             'description' => __( 'URL of the <strong>catch webhook</strong> of your Facebook zap.', 'kntnt-schedule-sociala-media-zapier' ),
+            'size' => 80,
         ];
 
         $fields["twitter_{$lang}_webhook"] = [
             'type' => 'url',
             'label' => __( "Twitter webhook", 'kntnt-schedule-sociala-media-zapier' ),
-            'size' => 80,
             'description' => __( 'URL of the <strong>catch webhook</strong> of your Twitter zap.', 'kntnt-schedule-sociala-media-zapier' ),
+            'size' => 80,
+        ];
+
+        $fields["linkedin_length"] = [
+            'type' => 'integer',
+            'label' => __( "Twitter length", 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => __( 'Max number of characters allowed in a LinkedIn post.', 'kntnt-schedule-sociala-media-zapier' ),
+            'size' => 10,
+            'min' => 0,
+            'max' => 700,
+            'default' => 700,
+        ];
+
+        $fields["facebook_length"] = [
+            'type' => 'integer',
+            'label' => __( "Facebook length", 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => __( 'Max number of characters allowed in a Facebook post.', 'kntnt-schedule-sociala-media-zapier' ),
+            'size' => 10,
+            'min' => 0,
+            'max' => 63206,
+            'default' => 63206,
+        ];
+
+        $fields["twitter_length"] = [
+            'type' => 'integer',
+            'label' => __( "Twitter length", 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => __( 'Max number of characters allowed in a tweet.', 'kntnt-schedule-sociala-media-zapier' ),
+            'size' => 10,
+            'min' => 0,
+            'max' => 280,
+            'default' => 256, // Leave 24 characters for space and t.co-link
         ];
 
         $fields['submit'] = [
