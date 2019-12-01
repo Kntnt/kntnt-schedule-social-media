@@ -1,6 +1,6 @@
 # Kntnt Schedule Sociala Media with Zapier
 
-WordPress plugin that provides ACF fields for scheduling webhooks that push social media posts to Zapier. 
+WordPress plugin that allows authors of posts to schedule social media posts that are published by Zapier. 
 
 ## Description
 
@@ -43,6 +43,10 @@ If you are unfamiliar with Git, please date it as a new issue on the plugin's [i
 If you are familiar with Git, please do a pull request.
 
 ## Changelog
+
+### 1.0.4
+
+Improved UI. Updated description of plugin.
 
 ### 1.0.3
 

@@ -17,16 +17,16 @@ class ACF {
         $this->has_facebook = Plugin::option( "facebook_{$lang}_webhook" );
         $this->has_twitter = Plugin::option( "twitter_{$lang}_webhook" );
 
-        add_filter( 'acf/prepare_field/key=field_5de3a0d2f9ad5', [ $this, 'missing_webhooks_message' ] );
+        add_filter( 'acf/prepare_field/key=field_5de3d3c09e8a6', [ $this, 'missing_webhooks_message' ] );
 
-        add_filter( 'acf/prepare_field/key=field_5ddec09314fa4', [ $this, 'linkedin_fields' ] );
-        add_filter( 'acf/prepare_field/key=field_5de16074d18f0', [ $this, 'linkedin_fields' ] );
+        add_filter( 'acf/prepare_field/key=field_5de3d40b9e8a7', [ $this, 'linkedin_fields' ] );
+        add_filter( 'acf/prepare_field/key=field_5de3d44b9e8aa', [ $this, 'linkedin_fields' ] );
 
-        add_filter( 'acf/prepare_field/key=field_5ddec0a714fa6', [ $this, 'facebook_fields' ] );
-        add_filter( 'acf/prepare_field/key=field_5de161425d142', [ $this, 'facebook_fields' ] );
+        add_filter( 'acf/prepare_field/key=field_5de3d4269e8a8', [ $this, 'facebook_fields' ] );
+        add_filter( 'acf/prepare_field/key=field_5de3e11763ca8', [ $this, 'facebook_fields' ] );
 
-        add_filter( 'acf/prepare_field/key=field_5ddec0a614fa5', [ $this, 'twitter_fields' ] );
-        add_filter( 'acf/prepare_field/key=field_5ddec20314fb1', [ $this, 'twitter_fields' ] );
+        add_filter( 'acf/prepare_field/key=field_5de3d42f9e8a9', [ $this, 'twitter_fields' ] );
+        add_filter( 'acf/prepare_field/key=field_5de3e1f4f470e', [ $this, 'twitter_fields' ] );
 
         require Plugin::template( 'acf-fields.php' );
 
