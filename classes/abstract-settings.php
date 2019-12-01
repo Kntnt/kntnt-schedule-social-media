@@ -1,6 +1,6 @@
 <?php
 
-namespace Kntnt\ACF_Zapier_Integrator;
+namespace Kntnt\Schedule_Sociala_Media_Zapier;
 
 abstract class Abstract_Settings {
 
@@ -29,7 +29,7 @@ abstract class Abstract_Settings {
      * Returns $links with a link to this setting page added.
      */
     public function add_plugin_action_links( $actions ) {
-        $settings_link_name = __( 'Settings', 'kntnt-acf-zapier-integrator' );
+        $settings_link_name = __( 'Settings', 'kntnt-schedule-sociala-media-zapier' );
         $settings_link_url = admin_url( "options-general.php?page={$this->ns}" );
         $actions[] = "<a href=\"$settings_link_url\">$settings_link_name</a>";
         return $actions;
@@ -42,7 +42,7 @@ abstract class Abstract_Settings {
 
         // Abort if current user has not permission to access the settings page.
         if ( ! current_user_can( 'manage_options' ) ) {
-            wp_die( __( 'Unauthorized use.', 'kntnt-acf-zapier-integrator' ) );
+            wp_die( __( 'Unauthorized use.', 'kntnt-schedule-sociala-media-zapier' ) );
         }
 
         // Update options if the option page is saved.
@@ -184,7 +184,7 @@ abstract class Abstract_Settings {
 
         // Warn about unsatisfied dependencies.
         if ( $unsatisfied_dependencies = Plugin::unsatisfied_dependencies() ) {
-            $message = sprintf( _n( 'This plugin must be installed and active: %s', 'These plugins must be installed and active: %s', count( $unsatisfied_dependencies ), 'kntnt-acf-zapier-integrator' ), join( ', ', $unsatisfied_dependencies ) );
+            $message = sprintf( _n( 'This plugin must be installed and active: %s', 'These plugins must be installed and active: %s', count( $unsatisfied_dependencies ), 'kntnt-schedule-sociala-media-zapier' ), join( ', ', $unsatisfied_dependencies ) );
             $this->notify_admin( $message, 'warning' );
         }
 
@@ -222,7 +222,7 @@ abstract class Abstract_Settings {
 
         // Abort if the form's nonce is not correct or expired.
         if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->ns ) ) {
-            wp_die( __( 'Nonce failed.', 'kntnt-acf-zapier-integrator' ) );
+            wp_die( __( 'Nonce failed.', 'kntnt-schedule-sociala-media-zapier' ) );
         }
 
         // Get fields
@@ -332,16 +332,16 @@ abstract class Abstract_Settings {
             $message = $field['validate-error-message'];
         }
         else if ( $field['label'] ) {
-            $message = sprintf( __( '<strong>ERROR:</strong> Invalid data in the field <em>%s</em>.', 'kntnt-acf-zapier-integrator' ), $field['label'] );
+            $message = sprintf( __( '<strong>ERROR:</strong> Invalid data in the field <em>%s</em>.', 'kntnt-schedule-sociala-media-zapier' ), $field['label'] );
         }
         else {
-            $message = __( '<strong>ERROR:</strong> Please review the settings and try again.', 'kntnt-acf-zapier-integrator' );
+            $message = __( '<strong>ERROR:</strong> Please review the settings and try again.', 'kntnt-schedule-sociala-media-zapier' );
         }
         $this->notify_admin( $message, 'error' );
     }
 
     private function notify_success() {
-        $message = __( 'Successfully saved settings.', 'kntnt-acf-zapier-integrator' );
+        $message = __( 'Successfully saved settings.', 'kntnt-schedule-sociala-media-zapier' );
         $this->notify_admin( $message, 'success' );
     }
 

@@ -6,7 +6,7 @@
  * Plugin URI:        https://github.com/kntnt/kntnt-schedule-sociala-media-zapier
  * GitHub Plugin URI: https://github.com/kntnt/kntnt-schedule-sociala-media-zapier
  * Description:       Provides ACF fields for scheduling webhooks that push social media posts to Zapier.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Thomas Barregren
  * Author URI:        https://www.kntnt.com/
  * License:           GPL-3.0+
@@ -20,7 +20,7 @@ namespace Kntnt\Schedule_Sociala_Media_Zapier;
 defined( 'WPINC' ) || die;
 
 // Define WP_DEBUG as TRUE and uncomment next line to debug this plugin.
-define( 'KNTNT_SCHEDULE_SOCIALA_MEDIA_ZAPIER', true );
+// define( 'KNTNT_SCHEDULE_SOCIALA_MEDIA_ZAPIER', true );
 
 spl_autoload_register( function ( $class ) {
 	$ns_len = strlen( __NAMESPACE__ );
