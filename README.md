@@ -44,6 +44,10 @@ If you are familiar with Git, please do a pull request.
 
 ## Changelog
 
+### 1.0.2
+
+Improved settings.
+
 ### 1.0.1
 
 Updated README. Disabled debugging. Fixed renaming.

@@ -27,21 +27,21 @@ class Settings extends Abstract_Settings {
             'type' => 'url',
             'label' => __( "LinkedIn webhook", 'kntnt-schedule-sociala-media-zapier' ),
             'size' => 80,
-            'description' => __( 'Enter the <em>catch webhook URL</em> of your your Webhook to LinkedIn zap.', 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => __( 'URL of the <strong>catch webhook</strong> of your LinkedIn zap.', 'kntnt-schedule-sociala-media-zapier' ),
         ];
 
         $fields['facebook_webhook'] = [
             'type' => 'url',
             'label' => __( "Facebook webhook", 'kntnt-schedule-sociala-media-zapier' ),
             'size' => 80,
-            'description' => __( 'Enter the <em>catch webhook URL</em> of your your Webhook to Facebook zap.', 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => __( 'URL of the <strong>catch webhook</strong> of your Facebook zap.', 'kntnt-schedule-sociala-media-zapier' ),
         ];
 
         $fields['twitter_webhook'] = [
             'type' => 'url',
             'label' => __( "Twitter webhook", 'kntnt-schedule-sociala-media-zapier' ),
             'size' => 80,
-            'description' => __( 'Enter the <em>catch webhook URL</em> of your your Webhook to Twitter zap.', 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => __( 'URL of the <strong>catch webhook</strong> of your Twitter zap.', 'kntnt-schedule-sociala-media-zapier' ),
         ];
 
         $fields['submit'] = [

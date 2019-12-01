@@ -7,6 +7,24 @@ if( function_exists('acf_add_local_field_group') ):
         'title' => 'Publish on sociala media',
         'fields' => array(
             array(
+                'key' => 'field_5de3a0d2f9ad5',
+                'label' => 'Missing webhooks',
+                'name' => '',
+                'type' => 'message',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'message' => 'Add the catch webhooks for your LinkedIn-, Facebook-, and/or Twitter-zaps in the <a href="/wp-admin/options-general.php?page=kntnt-schedule-sociala-media-zapier">settings page</a>.',
+                'new_lines' => 'wpautop',
+                'esc_html' => 0,
+                'wpml_cf_preferences' => 0,
+            ),
+            array(
                 'key' => 'field_5ddec09314fa4',
                 'label' => 'LinkedIn',
                 'name' => '',
