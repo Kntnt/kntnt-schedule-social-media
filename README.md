@@ -44,22 +44,6 @@ If you are familiar with Git, please do a pull request.
 
 ## Changelog
 
-### 1.0.4
-
-Improved UI. Updated description of plugin.
-
-### 1.0.3
-
-Added WPML support. Improved some comments. 
-
-### 1.0.2
-
-Improved settings.
-
-### 1.0.1
-
-Updated README. Disabled debugging. Fixed renaming.
-
 ### 1.0.0
 
 Initial release. Fully functional plugin.
