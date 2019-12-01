@@ -174,7 +174,7 @@ abstract class Abstract_Settings {
     }
 
     protected function actions_after_saving( $opt, $fields ) {
-        do_action( "$this->ns/settings/saved", $opt, $fields );
+        do_action( "$this->ns/after_saving", $opt, $fields );
     }
 
     /**
@@ -225,6 +225,10 @@ abstract class Abstract_Settings {
             wp_die( __( 'Nonce failed.', 'kntnt-schedule-sociala-media-zapier' ) );
         }
 
+        // Since the plugin can store other than just these settings in
+        // option, we must keep values not set.
+        $opt = array_merge( Plugin::option(), $opt );
+
         // Get fields
         $fields = $this->fields();
 
@@ -240,7 +244,7 @@ abstract class Abstract_Settings {
             }
 
             // A `checkbox group` with no options selected will be missing in
-            // $opt and needs to added with an empty array as value for
+            // $opt and needs to be added with an empty array as value for
             // consistency.
             if ( 'checkbox group' == $field['type'] && ! isset( $opt[ $id ] ) ) {
                 $opt[ $id ] = [];

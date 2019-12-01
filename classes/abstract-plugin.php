@@ -271,7 +271,7 @@ abstract class Abstract_Plugin {
                 $arg = print_r( $arg, true );
             }
         }
-        $message = ç( $message, ...$args );
+        $message = sprintf( $message, ...$args );
         error_log( "$caller: $message" );
     }
 

@@ -73,7 +73,9 @@ class Scheduler {
 
     private function send_posts( $posts, $target ) {
 
-        $webhook = Plugin::option( "{$target}_webhook" );
+        $lang = apply_filters( 'wpml_current_language', null ) ?: '';
+
+        $webhook = Plugin::option( "{$target}_{$lang}_webhook" );
         if ( ! $webhook ) {
             Plugin::log( 'No webhook set for %s', $this->post->ID, $target );
             return;
@@ -83,10 +85,16 @@ class Scheduler {
 
             $content = $post['content'];
 
+            // If the content is not provided and the target is LinkedIn or
+            // Facebook, which both allows more lengthy content, use the
+            // excerpt as content.
             if ( ! trim( $content ) && ( 'linkedin' == $target || 'facebook' == $target ) ) {
                 $content = $this->post_excerpt();
             }
 
+            // If the content is not provided and the target is Twitter, or
+            // if the target is LinkedIn or Facebook but the excerpt is empty,
+            // use the meta description provided by a SEO plugin.
             if ( ! trim( $content ) ) {
                 $content = $this->post_meta_description();
             }
@@ -102,10 +110,12 @@ class Scheduler {
     private function schedule_posts( $posts ) {
         foreach ( $posts as $post ) {
             $stimestamp = $this->timestamp( $post['date_and_time'] );
-            // The $timezone is used in the argument as a way to work around
-            // the WordPress idea that two identical events shouldn't be
-            // scheduled within 10 minutes, and at the same time prevent that
-            // more than one event is scheduled for each time.
+            // The $stimestamp in the argument works in conjunction with
+            // WordPress rule that two identical events can't be scheduled
+            // within ten minutes. The timestamp prevents an identical post
+            // to be posted more than once at the same time. At the same time
+            // it makes each post unique and hence allow more than one post
+            // to be published with ten minutes.
             wp_schedule_single_event( $stimestamp, 'kntnt_acf_zapier_scheduled_post', [ $this->post->ID, $stimestamp ] );
             Plugin::log( 'Scheduled publishing at %s for post with id %s', $post['date_and_time'], $this->post->ID );
         }

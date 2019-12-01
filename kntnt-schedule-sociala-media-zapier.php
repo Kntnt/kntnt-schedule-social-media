@@ -20,7 +20,7 @@ namespace Kntnt\Schedule_Sociala_Media_Zapier;
 defined( 'WPINC' ) || die;
 
 // Define WP_DEBUG as TRUE and uncomment next line to debug this plugin.
-// define( 'KNTNT_SCHEDULE_SOCIALA_MEDIA_ZAPIER', true );
+define( 'KNTNT_SCHEDULE_SOCIALA_MEDIA_ZAPIER', true );
 
 spl_autoload_register( function ( $class ) {
 	$ns_len = strlen( __NAMESPACE__ );
