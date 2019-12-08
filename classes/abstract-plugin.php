@@ -8,6 +8,8 @@ abstract class Abstract_Plugin {
 
     static private $plugin_dir;
 
+    static private $plugin_url;
+
     static private $unsatisfied_dependencies = null;
 
     static private $is_debugging = null;
@@ -19,6 +21,9 @@ abstract class Abstract_Plugin {
 
         // Path to this plugin's directory relative file system root.
         self::$plugin_dir = strtr( dirname( __DIR__ ), '\\', '/' );
+
+        // URL to this plugin's directory
+        self::$plugin_url = plugins_url( '', self::$plugin_dir . '/' . self::$ns . '.php' );
 
         // Install script runs only on install (not activation).
         // Uninstall script runs "magically" on uninstall.
@@ -83,6 +88,12 @@ abstract class Abstract_Plugin {
     // with leading slash.
     public static final function plugin_dir( $rel_path = '' ) {
         return self::str_join( self::$plugin_dir, $rel_path );
+    }
+
+    // This plugin's URL with no trailing slash. If $rel_path is given, with
+    // or without leading slash, it is appended with leading slash.
+    public static final function plugin_url( $rel_path = '' ) {
+        return self::str_join( self::$plugin_url, $rel_path );
     }
 
     // This plugin's path relative WordPress root, with leading slash but no
@@ -247,32 +258,26 @@ abstract class Abstract_Plugin {
         return rtrim( $lhs, $sep ) . $sep . ltrim( $rhs, $sep );
     }
 
-    // Writes the `$message` with '%s' replaced with provided additional
-    // arguments in order of appearance if the debug flag is set. Any percent
-    // sign that should be written must be escaped with another percent sign,
-    // that is `%%`. In addition to `%s`, any of the directives of `printf()`-
-    // function can be used (see https://www.php.net/manual/function.printf.php).
+    // If `$message` isn't a string, its value is printed. If `$message` is
+    // a string, it is written with each occurrence of '%s' replaced with
+    // the value of the corresponding additional argument converted to string.
+    // Any percent sign that should be written must be escaped with another
+    // percent sign, that is `%%`. This method do nothing if debug flag isn't
+    // set.
     public static final function log( $message = '', ...$args ) {
         if ( self::is_debugging() ) {
-            static::error( $message, ...$args );
+            static::_log( $message, ...$args );
         }
     }
 
-    // Writes the `$message` with '%s' replaced with provided additional
-    // arguments in order of appearance. Any percent sign that should be
-    // written must be escaped with another percent sign, that is `%%`. In
-    // addition to `%s`, any of the directives of `printf()`-function can be
-    // used (see https://www.php.net/manual/function.printf.php).
+    // If `$message` isn't a string, its value is printed. If `$message` is
+    // a string, it is written with each occurrence of '%s' replaced with
+    // the value of the corresponding additional argument converted to string.
+    // Any percent sign that should be written must be escaped with another
+    // percent sign, that is `%%`. This method works independent of
+    // the debug flag.
     public static final function error( $message = '', ...$args ) {
-        $caller = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 3 );
-        $caller = $caller[1]['class'] . '->' . $caller[1]['function'] . '()';
-        foreach ( $args as &$arg ) {
-            if ( is_array( $arg ) || is_object( $arg ) ) {
-                $arg = print_r( $arg, true );
-            }
-        }
-        $message = sprintf( $message, ...$args );
-        error_log( "$caller: $message" );
+        static::_log( $message, ...$args );
     }
 
     // Returns context => hook => class relationships for classes to load.
@@ -281,5 +286,21 @@ abstract class Abstract_Plugin {
     // Returns an array of 'plugin_slug' => 'Plugin Name' for each plugin that
     // must be active for his plugin to work.
     protected static function dependencies() { return []; }
+
+    private static final function _log( $message = '', ...$args ) {
+        if ( ! is_string( $message ) ) {
+            $args = [ $message ];
+            $message = '%s';
+        }
+        $caller = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 3 );
+        $caller = $caller[2]['class'] . '->' . $caller[2]['function'] . '()';
+        foreach ( $args as &$arg ) {
+            if ( is_array( $arg ) || is_object( $arg ) ) {
+                $arg = print_r( $arg, true );
+            }
+        }
+        $message = sprintf( $message, ...$args );
+        error_log( "$caller: $message" );
+    }
 
 }

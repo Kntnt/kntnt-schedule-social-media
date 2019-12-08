@@ -6,7 +6,7 @@
  * Plugin URI:        https://github.com/kntnt/kntnt-schedule-sociala-media-zapier
  * GitHub Plugin URI: https://github.com/kntnt/kntnt-schedule-sociala-media-zapier
  * Description:       Allows authors of posts to schedule social media posts that are published by Zapier.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            Thomas Barregren
  * Author URI:        https://www.kntnt.com/
  * License:           GPL-3.0+

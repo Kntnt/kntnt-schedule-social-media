@@ -44,6 +44,10 @@ If you are familiar with Git, please do a pull request.
 
 ## Changelog
 
+### 1.1.0
+
+Asynchronous sending; nothing is sent when posts are saved. Refactoring.
+
 ### 1.0.0
 
 Initial release. Fully functional plugin.

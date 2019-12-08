@@ -11,21 +11,21 @@ class Plugin extends Abstract_Plugin {
     }
 
     public function classes_to_load() {
-
         return [
-            'any' => [
+            'cron' => [
                 'init' => [
                     'ACF',
-                    'Scheduler',
+                    'Sender',
                 ],
             ],
             'admin' => [
                 'init' => [
+                    'ACF',
+                    'Scheduler',
                     'Settings',
                 ],
             ],
         ];
-
     }
 
 }

@@ -4,6 +4,8 @@ namespace Kntnt\Schedule_Sociala_Media_Zapier;
 
 class ACF {
 
+    use WPML;
+
     private $has_linkedin;
 
     private $has_facebook;
@@ -12,10 +14,11 @@ class ACF {
 
     public function run() {
 
-        $lang = apply_filters( 'wpml_current_language', null ) ?: '';
-        $this->has_linkedin = Plugin::option( "linkedin_{$lang}_webhook" );
-        $this->has_facebook = Plugin::option( "facebook_{$lang}_webhook" );
-        $this->has_twitter = Plugin::option( "twitter_{$lang}_webhook" );
+        $this->init_lang();
+
+        $this->has_linkedin = (bool) $this->webhook( 'linkedin' );
+        $this->has_facebook = (bool) $this->webhook( 'facebook' );
+        $this->has_twitter = (bool) $this->webhook( 'twitter' );
 
         add_filter( 'acf/prepare_field/key=field_5de3d3c09e8a6', [ $this, 'missing_webhooks_message' ] );
 

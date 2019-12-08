@@ -4,6 +4,8 @@ namespace Kntnt\Schedule_Sociala_Media_Zapier;
 
 class Settings extends Abstract_Settings {
 
+    use WPML;
+
     /**
      * Returns the settings menu title.
      */
@@ -23,23 +25,23 @@ class Settings extends Abstract_Settings {
      */
     protected function fields() {
 
-        $lang = apply_filters( 'wpml_current_language', null ) ?: '';
+        $this->init_lang();
 
-        $fields["linkedin_{$lang}_webhook"] = [
+        $fields[ $this->webhook_name( 'linkedin' ) ] = [
             'type' => 'url',
             'label' => __( "LinkedIn webhook", 'kntnt-schedule-sociala-media-zapier' ),
             'size' => 80,
             'description' => __( 'URL of the <strong>catch webhook</strong> of your LinkedIn zap.', 'kntnt-schedule-sociala-media-zapier' ),
         ];
 
-        $fields["facebook_{$lang}_webhook"] = [
+        $fields[ $this->webhook_name( 'facebook' ) ] = [
             'type' => 'url',
             'label' => __( "Facebook webhook", 'kntnt-schedule-sociala-media-zapier' ),
             'description' => __( 'URL of the <strong>catch webhook</strong> of your Facebook zap.', 'kntnt-schedule-sociala-media-zapier' ),
             'size' => 80,
         ];
 
-        $fields["twitter_{$lang}_webhook"] = [
+        $fields[ $this->webhook_name( 'twitter' ) ] = [
             'type' => 'url',
             'label' => __( "Twitter webhook", 'kntnt-schedule-sociala-media-zapier' ),
             'description' => __( 'URL of the <strong>catch webhook</strong> of your Twitter zap.', 'kntnt-schedule-sociala-media-zapier' ),
