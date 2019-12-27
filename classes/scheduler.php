@@ -2,8 +2,6 @@
 
 namespace Kntnt\Schedule_Sociala_Media_Zapier;
 
-use Psr\Log\AbstractLogger;
-
 class Scheduler {
 
     use Timestamp;
@@ -14,8 +12,9 @@ class Scheduler {
         add_action( 'save_post', [ $this, 'schedule_posts' ], 10, 2 );
     }
 
-    public function schedule_posts( $id, $post ) {
+    public function schedule_posts( $post_id, $post ) {
         if ( 'publish' == $post->post_status ) {
+            Plugin::log( 'Post %s is published.', $post_id );
             $this->post = $post;
             $this->schedule( 'linkedin' );
             $this->schedule( 'facebook' );
@@ -36,11 +35,13 @@ class Scheduler {
     private function schedule( $target ) {
         if ( $posts = Plugin::get_field( "{$target}_posts", $this->post->ID ) ) {
             foreach ( $posts as $post ) {
-                $time = $post['date_and_time'] ?: substr( $this->post->post_modified, 0, 16 );
-                $timestamp = $this->timestamp( $time );
+                $timestamp = $post['date_and_time'] ? $this->timestamp( $post['date_and_time'] ) : time();
                 wp_schedule_single_event( $timestamp, 'kntnt-schedule-sociala-media-zapier-publish-posts', [ $this->post->ID, $timestamp ] );
-                Plugin::log( 'Scheduled publishing at %s of social media posts of the WordPress post with id %s', $time, $this->post->ID );
+                Plugin::log( 'Post %s has %s post scheduled at %s.', $this->post->ID, $target, date( 'r', $timestamp ) );
             }
+        }
+        else {
+            Plugin::log( "Post %s has nothing scheduled for %s.", $this->post->ID, $target );
         }
     }
 

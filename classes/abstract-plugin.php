@@ -127,7 +127,7 @@ abstract class Abstract_Plugin {
     // replaced with `_` and all letters in uppercase.
     public static final function is_debugging() {
         if ( null == self::$is_debugging ) {
-            $kntnt_debug = strtr( strtoupper( self::$ns ), '-', '_' );
+            $kntnt_debug = strtr( strtoupper( self::$ns ), '-', '_' ) . '_DEBUG';
             self::$is_debugging = defined( 'WP_DEBUG' ) && constant( 'WP_DEBUG' ) && defined( $kntnt_debug ) && constant( $kntnt_debug );
         }
         return self::$is_debugging;

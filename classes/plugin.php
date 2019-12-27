@@ -14,14 +14,16 @@ class Plugin extends Abstract_Plugin {
         return [
             'cron' => [
                 'init' => [
-                    'ACF',
+                    'ACF',       // Needed by ACF
+                    'Scheduler', // To schedule social media posts when a scheduled post is published
                     'Sender',
                 ],
             ],
             'admin' => [
                 'init' => [
                     'ACF',
-                    'Scheduler',
+                    'ACF_UI',
+                    'Scheduler', // To schedule social media posts when a post is directly published
                     'Settings',
                 ],
             ],

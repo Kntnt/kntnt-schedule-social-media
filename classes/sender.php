@@ -18,6 +18,7 @@ class Sender {
         $this->post = get_post( $id );
         $this->init_lang( $id );
         if ( 'publish' == $this->post->post_status ) {
+            Plugin::log( 'Social media posts of  post %s is to be sent.', $id );
             $this->publish( 'linkedin' );
             $this->publish( 'facebook' );
             $this->publish( 'twitter' );
@@ -29,6 +30,7 @@ class Sender {
         // Get social media posts. Abort if none social media exists.
         $posts = Plugin::get_field( "{$target}_posts", $this->post->ID );
         if ( ! is_array( $posts ) ) {
+            Plugin::log('No social media posts exists for %s.', $target);
             return;
         }
 
@@ -38,6 +40,7 @@ class Sender {
 
         // Abort if no posts are due.
         if ( ! $due_posts ) {
+            Plugin::log('No social media posts are due for %s.', $target);
             return;
         }
 
@@ -46,11 +49,12 @@ class Sender {
         // This is to prevent them to be sent later if the missing webhook is
         // added.
         update_field( "{$target}_posts", $non_due_posts, $this->post->ID );
-        Plugin::log( 'Removed %s social media posts that have expired from the post with id %s', count( $due_posts ), $this->post->ID );
+        Plugin::log( 'Removed %s social media posts that have expired from the post with id %s.', count( $due_posts ), $this->post->ID );
 
         // Get webhook. Abort if none is provided.
         $webhook = $this->webhook( $target );
         if ( ! $webhook ) {
+            Plugin::log('No webhook is provided for %s.', $target);
             return;
         }
 
@@ -77,6 +81,10 @@ class Sender {
             // length and send  it to the webhook.
             if ( $content = $this->normalize_and_trim( $content, $target ) ) {
                 $this->send( $content, $webhook );
+                Plugin::log('Sending to %s.', $target);
+            }
+            else {
+                Plugin::log('No content to send to %s.', $target);
             }
 
         }

@@ -44,6 +44,10 @@ If you are familiar with Git, please do a pull request.
 
 ## Changelog
 
+### 1.1.1
+
+Now sending when scheduled posts are published. Improved logging. 
+
 ### 1.1.0
 
 Asynchronous sending; nothing is sent when posts are saved. Refactoring.
