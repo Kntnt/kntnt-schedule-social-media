@@ -12,9 +12,9 @@ class Scheduler {
         add_action( 'save_post', [ $this, 'schedule_posts' ], 10, 2 );
     }
 
-    public function schedule_posts( $post_id, $post ) {
+    public function schedule_posts( $id, $post ) {
         if ( 'publish' == $post->post_status ) {
-            Plugin::log( 'Post %s is published.', $post_id );
+            Plugin::log( 'Post %s is published.', $id );
             $this->post = $post;
             $this->schedule( 'linkedin' );
             $this->schedule( 'facebook' );
