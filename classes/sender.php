@@ -22,6 +22,7 @@ class Sender {
             $this->publish( 'linkedin' );
             $this->publish( 'facebook' );
             $this->publish( 'twitter' );
+            $this->publish( 'email' );
         }
     }
 
@@ -30,7 +31,7 @@ class Sender {
         // Get social media posts. Abort if none social media exists.
         $posts = Plugin::get_field( "{$target}_posts", $this->post->ID );
         if ( ! is_array( $posts ) ) {
-            Plugin::log('No social media posts exists for %s.', $target);
+            Plugin::log( 'No social media posts exists for %s.', $target );
             return;
         }
 
@@ -40,7 +41,7 @@ class Sender {
 
         // Abort if no posts are due.
         if ( ! $due_posts ) {
-            Plugin::log('No social media posts are due for %s.', $target);
+            Plugin::log( 'No social media posts are due for %s.', $target );
             return;
         }
 
@@ -54,7 +55,7 @@ class Sender {
         // Get webhook. Abort if none is provided.
         $webhook = $this->webhook( $target );
         if ( ! $webhook ) {
-            Plugin::log('No webhook is provided for %s.', $target);
+            Plugin::log( 'No webhook is provided for %s.', $target );
             return;
         }
 
@@ -63,16 +64,18 @@ class Sender {
             // Get the content of the social media post to be published.
             $content = $post['content'];
 
-            // If the content is not provided and the target is LinkedIn or
-            // Facebook, which both allows more lengthy content, use the
-            // excerpt as content.
-            if ( ! trim( $content ) && ( 'linkedin' == $target || 'facebook' == $target ) ) {
+            // Use the excerpt as content if the content is not provided and
+            // the target isn't Twitter (which don't allows lengthy content).
+            if ( ! trim( $content ) && ( 'twitter' != $target ) ) {
                 $content = $this->post_excerpt();
             }
 
             // If the content is not provided and the target is Twitter, or
             // if the target is LinkedIn or Facebook but the excerpt is empty,
-            // use the meta description provided by a SEO plugin.
+            // .
+            // Use the meta description provided by a SEO plugin if the content
+            // is not provided and either the target is Twitter or excerpt is
+            // empty.
             if ( ! trim( $content ) ) {
                 $content = $this->post_meta_description();
             }
@@ -81,10 +84,10 @@ class Sender {
             // length and send  it to the webhook.
             if ( $content = $this->normalize_and_trim( $content, $target ) ) {
                 $this->send( $content, $webhook );
-                Plugin::log('Sending to %s.', $target);
+                Plugin::log( 'Sending to %s.', $target );
             }
             else {
-                Plugin::log('No content to send to %s.', $target);
+                Plugin::log( 'No content to send to %s.', $target );
             }
 
         }
@@ -122,7 +125,7 @@ class Sender {
     }
 
     private function normalize_and_trim( $content, $target ) {
-        $max_length = Plugin::option( "{$target}_length" );
+        $max_length = Plugin::option( "{$target}_length", PHP_INT_MAX );
         $content = normalizer_normalize( trim( $content ) );
         $len = strlen( $content );
         if ( $len > $max_length ) {
