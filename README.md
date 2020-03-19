@@ -44,6 +44,10 @@ If you are familiar with Git, please do a pull request.
 
 ## Changelog
 
+### 1.2.0
+
+Added email as new channel.
+
 ### 1.1.1
 
 Now sending when scheduled posts are published. Improved logging. 
