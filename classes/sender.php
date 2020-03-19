@@ -70,9 +70,6 @@ class Sender {
                 $content = $this->post_excerpt();
             }
 
-            // If the content is not provided and the target is Twitter, or
-            // if the target is LinkedIn or Facebook but the excerpt is empty,
-            // .
             // Use the meta description provided by a SEO plugin if the content
             // is not provided and either the target is Twitter or excerpt is
             // empty.
@@ -125,7 +122,7 @@ class Sender {
     }
 
     private function normalize_and_trim( $content, $target ) {
-        $max_length = Plugin::option( "{$target}_length", PHP_INT_MAX );
+        $max_length = (int) Plugin::option( "{$target}_length", PHP_INT_MAX );
         $content = normalizer_normalize( trim( $content ) );
         $len = strlen( $content );
         if ( $len > $max_length ) {
@@ -168,9 +165,18 @@ class Sender {
 
         $data->content = $content;
 
+        if ( $thumbnail_id = get_post_thumbnail_id( $this->post->ID ) ) {
+            $thumbnail_src = wp_get_attachment_image_src( $thumbnail_id, Plugin::option( 'image_size', 'medium_large' ) );
+            $data->image = $thumbnail_src[0];
+        }
+        else {
+            $data->image = Plugin::option( 'default_image', '' );
+        }
+
         $data->id = $this->post->ID;
         $data->url = $this->url( get_permalink( $this->post ) ?: $this->post->guid );
         $data->title = $this->post->post_title;
+        $data->description = trim( $this->post_meta_description() ) ?: trim( $this->post_excerpt() ) ?: '';
         $data->author = get_the_author_meta( 'display_name', $this->post->post_author );
         $data->published_date = $this->post->post_date;
         $data->published_date_gmt = $this->post->post_date_gmt;

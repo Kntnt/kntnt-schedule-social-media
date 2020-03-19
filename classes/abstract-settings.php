@@ -46,11 +46,12 @@ abstract class Abstract_Settings {
         }
 
         // Update options if the option page is saved.
-        if ( isset( $_POST[ $this->ns ] ) ) {
-            $this->update_options( $_POST[ $this->ns ] );
+        if ( $_POST ) {
+            $opt = isset( $_POST[ $this->ns ] ) ? $_POST[ $this->ns ] : [];
+            $this->update_options( $opt );
         }
 
-        // Rende the option page.
+        // Render the option page.
         $this->render_settings_page();
 
     }
@@ -173,9 +174,7 @@ abstract class Abstract_Settings {
         return true;
     }
 
-    protected function actions_after_saving( $opt, $fields ) {
-        do_action( "$this->ns/after_saving", $opt, $fields );
-    }
+    protected function actions_after_saving( $opt, $fields ) { }
 
     /**
      * Render settings page.
@@ -224,10 +223,6 @@ abstract class Abstract_Settings {
         if ( ! wp_verify_nonce( $_POST['_wpnonce'], $this->ns ) ) {
             wp_die( __( 'Nonce failed.', 'kntnt-schedule-sociala-media-zapier' ) );
         }
-
-        // Since the plugin can store other than just these settings in
-        // option, we must keep values not set.
-        $opt = array_merge( Plugin::option(), $opt );
 
         // Get fields
         $fields = $this->fields();
@@ -318,14 +313,18 @@ abstract class Abstract_Settings {
                 }
             }
 
+            // Keep other options that are not settings.
+            $opt = array_merge( Plugin::option( null, [] ), $opt );
+
             // Save inputted values.
             update_option( $this->ns, $opt );
 
             // Success notification
             $this->notify_success();
 
-            // Do actions after saving.
+            // Actions after saving.
             $this->actions_after_saving( $opt, $fields );
+            do_action( "$this->ns/after_saving", $opt, $fields );
 
         }
 

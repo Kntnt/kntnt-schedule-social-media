@@ -4,6 +4,12 @@ namespace Kntnt\Schedule_Sociala_Media_Zapier;
 
 class Settings extends Abstract_Settings {
 
+    const LINKEDIN_MAX_LENGTH = 700;
+
+    const FACEBOOK_MAX_LENGTH = 63206;
+
+    const TWITTER_MAX_LENGTH = 280;
+
     use WPML;
 
     /**
@@ -37,11 +43,13 @@ class Settings extends Abstract_Settings {
         $fields["linkedin_length"] = [
             'type' => 'integer',
             'label' => __( "Twitter length", 'kntnt-schedule-sociala-media-zapier' ),
-            'description' => __( 'Max number of characters allowed in a LinkedIn post.', 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => sprintf( __( 'Max number of characters allowed in a LinkedIn post. Defaults to %s, which is max allowed.', 'kntnt-schedule-sociala-media-zapier' ), static::LINKEDIN_MAX_LENGTH ),
             'size' => 10,
             'min' => 0,
-            'max' => 700,
-            'default' => 700,
+            'max' => static::LINKEDIN_MAX_LENGTH,
+            'default' => static::LINKEDIN_MAX_LENGTH,
+            'filter-before' => function ( $val ) { return static::LINKEDIN_MAX_LENGTH != $val ? $val : ''; },
+            'filter-after' => function ( $val ) { return '' != $val ? $val : static::LINKEDIN_MAX_LENGTH; },
         ];
 
         $fields[ $this->webhook_name( 'facebook' ) ] = [
@@ -54,11 +62,13 @@ class Settings extends Abstract_Settings {
         $fields["facebook_length"] = [
             'type' => 'integer',
             'label' => __( "Facebook length", 'kntnt-schedule-sociala-media-zapier' ),
-            'description' => __( 'Max number of characters allowed in a Facebook post.', 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => sprintf( __( 'Max number of characters allowed in a Facebook post. Defaults to %s, which is max allowed.', 'kntnt-schedule-sociala-media-zapier' ), static::FACEBOOK_MAX_LENGTH ),
             'size' => 10,
             'min' => 0,
-            'max' => 63206,
-            'default' => 63206,
+            'max' => static::FACEBOOK_MAX_LENGTH,
+            'default' => static::FACEBOOK_MAX_LENGTH,
+            'filter-before' => function ( $val ) { return static::FACEBOOK_MAX_LENGTH != $val ? $val : ''; },
+            'filter-after' => function ( $val ) { return '' != $val ? $val : static::FACEBOOK_MAX_LENGTH; },
         ];
 
         $fields[ $this->webhook_name( 'twitter' ) ] = [
@@ -71,11 +81,13 @@ class Settings extends Abstract_Settings {
         $fields["twitter_length"] = [
             'type' => 'integer',
             'label' => __( "Twitter length", 'kntnt-schedule-sociala-media-zapier' ),
-            'description' => __( 'Max number of characters allowed in a tweet.', 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => sprintf( __( 'Max number of characters allowed in a Facebook post. Defaults to %s, which leaves 24 characters for space and t.co-link.', 'kntnt-schedule-sociala-media-zapier' ), static::LINKEDIN_MAX_LENGTH - 24 ),
             'size' => 10,
             'min' => 0,
-            'max' => 280,
-            'default' => 256, // Leave 24 characters for space and t.co-link
+            'max' => static::TWITTER_MAX_LENGTH,
+            'default' => '',
+            'filter-before' => function ( $val ) { return ( static::TWITTER_MAX_LENGTH - 24 ) != $val ? $val : ''; },
+            'filter-after' => function ( $val ) { return '' != $val ? $val : ( static::TWITTER_MAX_LENGTH - 24 ); },
         ];
 
         $fields[ $this->webhook_name( 'email' ) ] = [
@@ -88,10 +100,27 @@ class Settings extends Abstract_Settings {
         $fields["email_length"] = [
             'type' => 'integer',
             'label' => __( "Email length", 'kntnt-schedule-sociala-media-zapier' ),
-            'description' => __( 'Max number of characters allowed in an email.', 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => __( 'Max number of characters allowed in an email. Defaults to unlimited.', 'kntnt-schedule-sociala-media-zapier' ),
             'size' => 10,
             'min' => 0,
-            'default' => PHP_INT_MAX,
+            'default' => '',
+            'filter-before' => function ( $val ) { return PHP_INT_MAX != $val ? $val : ''; },
+            'filter-after' => function ( $val ) { return '' != $val ? $val : PHP_INT_MAX; },
+        ];
+
+        $fields['image_size'] = [
+            'type' => 'select',
+            'label' => __( "Image size", 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => __( 'Size of featured image.', 'kntnt-schedule-sociala-media-zapier' ),
+            'options' => $this->image_sizes(),
+            'default' => 'medium_large',
+        ];
+
+        $fields['default_image'] = [
+            'type' => 'url',
+            'label' => __( "Default image", 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => __( 'Url of image to show for posts with no featured image.', 'kntnt-schedule-sociala-media-zapier' ),
+            'size' => 80,
         ];
 
         $fields['submit'] = [
@@ -100,6 +129,14 @@ class Settings extends Abstract_Settings {
 
         return $fields;
 
+    }
+
+    private function image_sizes() {
+        $image_sizes = [ '' => '' ];
+        foreach ( Plugin::image_sizes() as $name => $size ) {
+            $image_sizes[ $name ] = "$name (${size['width']}x${size['height']})";
+        }
+        return $image_sizes;
     }
 
 }
