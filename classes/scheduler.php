@@ -19,6 +19,7 @@ class Scheduler {
             $this->schedule( 'linkedin' );
             $this->schedule( 'facebook' );
             $this->schedule( 'twitter' );
+            $this->schedule( 'email' );
         }
     }
 
@@ -34,6 +35,7 @@ class Scheduler {
     // $stimestamp as arguments.
     private function schedule( $target ) {
         if ( $posts = Plugin::get_field( "{$target}_posts", $this->post->ID ) ) {
+            error_log( "{$target}_posts = " . print_r( $posts, true ) );
             foreach ( $posts as $post ) {
                 $timestamp = $post['date_and_time'] ? $this->timestamp( $post['date_and_time'] ) : time();
                 wp_schedule_single_event( $timestamp, 'kntnt-schedule-sociala-media-zapier-publish-posts', [ $this->post->ID, $timestamp ] );

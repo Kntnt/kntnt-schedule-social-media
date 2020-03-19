@@ -34,20 +34,6 @@ class Settings extends Abstract_Settings {
             'description' => __( 'URL of the <strong>catch webhook</strong> of your LinkedIn zap.', 'kntnt-schedule-sociala-media-zapier' ),
         ];
 
-        $fields[ $this->webhook_name( 'facebook' ) ] = [
-            'type' => 'url',
-            'label' => __( "Facebook webhook", 'kntnt-schedule-sociala-media-zapier' ),
-            'description' => __( 'URL of the <strong>catch webhook</strong> of your Facebook zap.', 'kntnt-schedule-sociala-media-zapier' ),
-            'size' => 80,
-        ];
-
-        $fields[ $this->webhook_name( 'twitter' ) ] = [
-            'type' => 'url',
-            'label' => __( "Twitter webhook", 'kntnt-schedule-sociala-media-zapier' ),
-            'description' => __( 'URL of the <strong>catch webhook</strong> of your Twitter zap.', 'kntnt-schedule-sociala-media-zapier' ),
-            'size' => 80,
-        ];
-
         $fields["linkedin_length"] = [
             'type' => 'integer',
             'label' => __( "Twitter length", 'kntnt-schedule-sociala-media-zapier' ),
@@ -56,6 +42,13 @@ class Settings extends Abstract_Settings {
             'min' => 0,
             'max' => 700,
             'default' => 700,
+        ];
+
+        $fields[ $this->webhook_name( 'facebook' ) ] = [
+            'type' => 'url',
+            'label' => __( "Facebook webhook", 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => __( 'URL of the <strong>catch webhook</strong> of your Facebook zap.', 'kntnt-schedule-sociala-media-zapier' ),
+            'size' => 80,
         ];
 
         $fields["facebook_length"] = [
@@ -68,6 +61,13 @@ class Settings extends Abstract_Settings {
             'default' => 63206,
         ];
 
+        $fields[ $this->webhook_name( 'twitter' ) ] = [
+            'type' => 'url',
+            'label' => __( "Twitter webhook", 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => __( 'URL of the <strong>catch webhook</strong> of your Twitter zap.', 'kntnt-schedule-sociala-media-zapier' ),
+            'size' => 80,
+        ];
+
         $fields["twitter_length"] = [
             'type' => 'integer',
             'label' => __( "Twitter length", 'kntnt-schedule-sociala-media-zapier' ),
@@ -76,6 +76,22 @@ class Settings extends Abstract_Settings {
             'min' => 0,
             'max' => 280,
             'default' => 256, // Leave 24 characters for space and t.co-link
+        ];
+
+        $fields[ $this->webhook_name( 'email' ) ] = [
+            'type' => 'url',
+            'label' => __( "Email webhook", 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => __( 'URL of the <strong>catch webhook</strong> of your email zap.', 'kntnt-schedule-sociala-media-zapier' ),
+            'size' => 80,
+        ];
+
+        $fields["email_length"] = [
+            'type' => 'integer',
+            'label' => __( "Email length", 'kntnt-schedule-sociala-media-zapier' ),
+            'description' => __( 'Max number of characters allowed in an email.', 'kntnt-schedule-sociala-media-zapier' ),
+            'size' => 10,
+            'min' => 0,
+            'default' => PHP_INT_MAX,
         ];
 
         $fields['submit'] = [
