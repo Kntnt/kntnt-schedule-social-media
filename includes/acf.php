@@ -1,6 +1,6 @@
 <?php
 
-use Kntnt\Schedule_Sociala_Media_Zapier\Plugin;
+use Kntnt\Schedule_Social_Media\Plugin;
 
 acf_add_local_field_group( [
     'key' => 'group_5de3d371c0c5d',
@@ -19,7 +19,7 @@ acf_add_local_field_group( [
                 'class' => '',
                 'id' => '',
             ],
-            'message' => 'Add the catch webhooks for your LinkedIn-, Facebook-, Twitter- and/or Email-zaps in the <a href="/wp-admin/options-general.php?page=kntnt-schedule-sociala-media-zapier">settings page</a>.',
+            'message' => 'Add the catch webhooks for your LinkedIn-, Facebook-, Twitter- and/or Email-zaps in the <a href="/wp-admin/options-general.php?page=kntnt-schedule-social-media">settings page</a>.',
             'new_lines' => '',
             'esc_html' => 0,
         ],

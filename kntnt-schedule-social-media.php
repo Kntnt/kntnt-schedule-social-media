@@ -2,25 +2,25 @@
 
 /**
  * @wordpress-plugin
- * Plugin Name:       Kntnt Schedule Sociala Media with Zapier
- * Plugin URI:        https://github.com/kntnt/kntnt-schedule-sociala-media-zapier
- * GitHub Plugin URI: https://github.com/kntnt/kntnt-schedule-sociala-media-zapier
- * Description:       Allows authors of posts to schedule social media posts that are published by Zapier.
- * Version:           1.2.0
+ * Plugin Name:       Kntnt Schedule Social Media
+ * Plugin URI:        https://github.com/kntnt/kntnt-schedule-social-media
+ * GitHub Plugin URI: https://github.com/kntnt/kntnt-schedule-social-media
+ * Description:       Allows authors of posts to schedule social media posts.
+ * Version:           2.0.0
  * Author:            Thomas Barregren
  * Author URI:        https://www.kntnt.com/
  * License:           GPL-3.0+
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
- * Text Domain:       kntnt-schedule-sociala-media-zapier
+ * Text Domain:       kntnt-schedule-social-media
  * Domain Path:       /languages
  */
 
-namespace Kntnt\Schedule_Sociala_Media_Zapier;
+namespace Kntnt\Schedule_Social_Media;
 
 defined( 'WPINC' ) || die;
 
 // To debug this plugin, set both WP_DEBUG and following constant to true.
-// define( 'KNTNT_SCHEDULE_SOCIALA_MEDIA_ZAPIER_DEBUG', true );
+// define( 'KNTNT_SCHEDULE_SOCIAL_MEDIA_DEBUG', true );
 
 spl_autoload_register( function ( $class ) {
     $ns_len = strlen( __NAMESPACE__ );

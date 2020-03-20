@@ -1,6 +1,6 @@
 <?php
 
-namespace Kntnt\Schedule_Sociala_Media_Zapier;
+namespace Kntnt\Schedule_Social_Media;
 
 class Sender {
 
@@ -11,7 +11,7 @@ class Sender {
     private $post;
 
     public function run() {
-        add_action( 'kntnt-schedule-sociala-media-zapier-publish-posts', [ $this, 'publish_posts' ], 10, 1 );
+        add_action( 'kntnt-schedule-social-media-publish-posts', [ $this, 'publish_posts' ], 10, 1 );
     }
 
     public function publish_posts( $id ) {

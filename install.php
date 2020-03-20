@@ -2,4 +2,4 @@
 
 defined( 'WPINC' ) || die;
 
-add_option( 'kntnt-schedule-sociala-media-zapier', [] );
+add_option( 'kntnt-schedule-social-media', [] );

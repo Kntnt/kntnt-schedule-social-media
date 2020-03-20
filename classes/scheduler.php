@@ -1,6 +1,6 @@
 <?php
 
-namespace Kntnt\Schedule_Sociala_Media_Zapier;
+namespace Kntnt\Schedule_Social_Media;
 
 class Scheduler {
 
@@ -37,7 +37,7 @@ class Scheduler {
         if ( $posts = Plugin::get_field( "{$target}_posts", $this->post->ID ) ) {
             foreach ( $posts as $post ) {
                 $timestamp = $post['date_and_time'] ? $this->timestamp( $post['date_and_time'] ) : time();
-                wp_schedule_single_event( $timestamp, 'kntnt-schedule-sociala-media-zapier-publish-posts', [ $this->post->ID, $timestamp ] );
+                wp_schedule_single_event( $timestamp, 'kntnt-schedule-social-media-publish-posts', [ $this->post->ID, $timestamp ] );
                 Plugin::log( 'Post %s has %s post scheduled at %s.', $this->post->ID, $target, date( 'r', $timestamp ) );
             }
         }

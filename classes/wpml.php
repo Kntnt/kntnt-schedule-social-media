@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Kntnt\Schedule_Sociala_Media_Zapier;
+namespace Kntnt\Schedule_Social_Media;
 
 
 trait WPML {
