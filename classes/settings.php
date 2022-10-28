@@ -42,7 +42,7 @@ class Settings extends Abstract_Settings {
 
         $fields["linkedin_length"] = [
             'type' => 'integer',
-            'label' => __( "Twitter length", 'kntnt-schedule-social-media' ),
+            'label' => __( "LinkedIn length", 'kntnt-schedule-social-media' ),
             'description' => sprintf( __( 'Max number of characters allowed in a LinkedIn post. Defaults to %s, which is max allowed.', 'kntnt-schedule-social-media' ), static::LINKEDIN_MAX_LENGTH ),
             'size' => 10,
             'min' => 0,
