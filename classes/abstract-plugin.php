@@ -306,7 +306,7 @@ abstract class Abstract_Plugin {
     // must be active for his plugin to work.
     protected static function dependencies() { return []; }
 
-    private static final function _log( $message = '', ...$args ) {
+    private static function _log( $message = '', ...$args ) {
         if ( ! is_string( $message ) ) {
             $args = [ $message ];
             $message = '%s';
