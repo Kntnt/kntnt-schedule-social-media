@@ -6,7 +6,7 @@
  * Plugin URI:        https://github.com/kntnt/kntnt-schedule-social-media
  * GitHub Plugin URI: https://github.com/kntnt/kntnt-schedule-social-media
  * Description:       Allows authors of posts to schedule social media posts.
- * Version:           2.0.0
+ * Version:           2.1.0
  * Author:            Thomas Barregren
  * Author URI:        https://www.kntnt.com/
  * License:           GPL-3.0+
