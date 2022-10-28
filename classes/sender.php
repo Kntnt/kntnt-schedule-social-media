@@ -137,18 +137,15 @@ class Sender {
 
     private function send( $content, $webhook ) {
 
-        $data = $this->data( $content );
+	$data = [
+            'method' => 'POST',
+            'headers' => 'Content-Type: application/json',
+            'body' => wp_json_encode( $this->data( $content), JSON_UNESCAPED_UNICODE ),
+        ];
 
         Plugin::log( 'Sending to webhook %s: %s', $webhook, $data );
 
-        $result = wp_remote_post( esc_url_raw( $webhook ), [
-            'method' => 'POST',
-            'headers' => [
-                'Accept: application/json',
-                'Content-Type: application/json',
-            ],
-            'body' => json_encode( $data ),
-        ] );
+        $result = wp_remote_post( esc_url_raw( $webhook ), $data );
 
         if ( is_wp_error( $result ) ) {
             Plugin::log( 'Failed sending to  webhook %s. %s', $webhook, $result->get_error_message() );
